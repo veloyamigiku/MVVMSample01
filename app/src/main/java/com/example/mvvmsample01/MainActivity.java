@@ -1,5 +1,6 @@
 package com.example.mvvmsample01;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -9,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.jakewharton.rxbinding4.view.RxView;
 
 import java.util.HashMap;
-
-import io.reactivex.rxjava3.core.Observable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private Button button6;
     private Button button7;
     private Button button8;
-    private HashMap<Integer, Button> buttonNumberMap;
+    private Button button9;
     private MainViewModel mvm;
 
     @Override
@@ -32,28 +31,21 @@ public class MainActivity extends AppCompatActivity {
 
         bindEventOfView();
 
-        mvm.isAllOn
-                .subscribe(
-                        isAllOn -> {
-                            Log.d(MainActivity.class.getSimpleName(), "AllOn");
-                        }
-                );
-        mvm.onOff
-                .subscribe(
-                        onOffList -> {
-                            for (int i = 0; i < onOffList.length; i++) {
-                                // todo ここから再開。
-                            }
-                        }
-                )
     }
 
     private void bindEventOfButton(Button button, int buttonNumber) {
-        RxView.clicks(button)
-                .subscribe(e -> {
-                    mvm.pushButton(buttonNumber);
-                });
-        buttonNumberMap.put(buttonNumber, button);
+
+        RxView.clicks(button).subscribe(e -> {
+            mvm.pushButton(buttonNumber);
+        });
+
+        mvm.getObservableOnOff(buttonNumber).subscribe(onOff -> {
+            if (onOff) {
+                button.setBackgroundColor(Color.RED);
+            } else {
+                button.setBackgroundColor(Color.GRAY);
+            }
+        });
     }
 
     private void bindEventOfView() {
@@ -76,6 +68,12 @@ public class MainActivity extends AppCompatActivity {
         bindEventOfButton(button7, 7);
         button8 = findViewById(R.id.button8);
         bindEventOfButton(button8, 8);
+        button9 = findViewById(R.id.button9);
+        bindEventOfButton(button9, 9);
 
+        mvm.isAllOn.subscribe(isAllOn -> {
+            Log.d(MainActivity.class.getSimpleName(), "AllOn:" + isAllOn);
+        });
     }
+
 }
