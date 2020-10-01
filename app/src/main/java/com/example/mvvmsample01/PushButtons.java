@@ -11,9 +11,9 @@ import io.reactivex.rxjava3.core.Observable;
 
 public class PushButtons {
 
-    private final int rowCount = 3;
+    private int rowCount;
 
-    private final int colCount = 3;
+    private int colCount;
 
     private PushButton[][] buttons;
 
@@ -25,8 +25,9 @@ public class PushButtons {
 
     public Observable<Boolean> isAllOn;
 
-    public PushButtons() {
-
+    public PushButtons(int rowCount, int colCount) {
+        this.rowCount = rowCount;
+        this.colCount = colCount;
         buttons = new PushButton[rowCount][colCount];
         buttonNumberMap = new HashMap<>();
         buttonOnOffMap = new HashMap<>();
