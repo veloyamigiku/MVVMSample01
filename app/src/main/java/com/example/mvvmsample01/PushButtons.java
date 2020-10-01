@@ -122,4 +122,15 @@ public class PushButtons {
         isAllOn();
     }
 
+    public void clear() {
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < colCount; j++) {
+                int buttonNumber = i * colCount + j + 1;
+                PushButton button = buttons[i][j];
+                button.setOn(false);
+                buttonOnOffMap.get(buttonNumber).accept(false);
+            }
+        }
+    }
+
 }

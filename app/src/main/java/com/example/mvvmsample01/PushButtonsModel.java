@@ -27,4 +27,8 @@ public class PushButtonsModel {
         pushButtons.push(buttonNumber);
     }
 
+    public void clearButton() {
+        pushButtons.clear();
+    }
+
 }

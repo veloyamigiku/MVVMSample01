@@ -1,5 +1,6 @@
 package com.example.mvvmsample01;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.jakewharton.rxbinding4.view.RxView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements InfoDialogFragment.Interface {
 
     private static final int[][] PUSH_BUTTONS_ID_ARY = new int[][] {
             {R.id.button1, R.id.button2, R.id.button3},
@@ -62,7 +63,24 @@ public class MainActivity extends AppCompatActivity {
 
         pbm.isAllOn.subscribe(isAllOn -> {
             Log.d(MainActivity.class.getSimpleName(), "AllOn:" + isAllOn);
+            if (isAllOn) {
+                InfoDialogFragment dialogFragment = InfoDialogFragment.newInstance(
+                        "Puzzle Clear",
+                        "OK",
+                        "Puzzle Clear");
+                dialogFragment.show(getSupportFragmentManager(), MainActivity.class.getSimpleName());
+            }
         });
     }
 
+    @Override
+    public void pushPositiveButton(String tag) {
+        switch (tag) {
+            case "Puzzle Clear":
+                pbm.clearButton();
+                break;
+            default:
+                break;
+        }
+    }
 }
