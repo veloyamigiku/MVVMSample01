@@ -13,7 +13,7 @@ public class PushButtonsTest {
     public void test01() {
 
         // 初期化時の状態をテストする。
-        PushButtons pushButtons = new PushButtons();
+        PushButtons pushButtons = new PushButtons(3, 3);
         HashMap<Integer, Boolean> expectButtonOnOff = new HashMap<>();
         expectButtonOnOff.put(1, false);
         expectButtonOnOff.put(2, false);
@@ -38,7 +38,7 @@ public class PushButtonsTest {
     public void test02() {
 
         // 中央のボタンをクリックした時の状態をテストする。
-        PushButtons pushButtons = new PushButtons();
+        PushButtons pushButtons = new PushButtons(3, 3);
         pushButtons.push(5);
         HashMap<Integer, Boolean> expectButtonOnOff = new HashMap<>();
         expectButtonOnOff.put(1, false);
